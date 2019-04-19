@@ -15,24 +15,31 @@ public class Problem110 {
         }
     }
 
-    // todo:待优化
     public boolean isBalanced(TreeNode root) {
-        if (root == null || root.left == null && root.right == null) {
+        if (root == null) {
             return true;
         }
         int leftDepth = getTreeDepth(root.left);
         int rightDepth = getTreeDepth(root.right);
-        if (Math.abs(leftDepth - rightDepth) > 1) {
+        if (leftDepth == -1 || rightDepth == -1) {
             return false;
         }
-        return isBalanced(root.left) && isBalanced(root.right);
+        return Math.abs(leftDepth - rightDepth) <= 1;
     }
 
     public int getTreeDepth(TreeNode node) {
         if (node == null) {
             return 0;
         }
-        return Math.max(getTreeDepth(node.left), getTreeDepth(node.right)) + 1;
+        int leftDepth = getTreeDepth(node.left);
+        int rightDepth = getTreeDepth(node.right);
+        if (leftDepth == -1 || rightDepth == -1) {
+            return -1;
+        }
+        if (Math.abs(leftDepth - rightDepth) > 1) {
+            return -1;
+        }
+        return Math.max(leftDepth, rightDepth) + 1;
     }
 
 
